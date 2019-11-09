@@ -13,7 +13,7 @@ from PIL import Image
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-
+import skimage
 
 def createFundusMask(inputImage):
         x, y, channels =inputImage.shape
@@ -42,5 +42,13 @@ inputImage = cv2.imread('test2.TIF')
 
 #creating mask/fundus
 img=createFundusMask(inputImage)
+
+
+#elementarne prvky
+se=skimage.morphology.octagon(9, 8)
+se1=skimage.morphology.disk(5)
+se2=skimage.morphology.disk(3)
+se11=skimage.morphology.disk(6)
+se22=skimage.morphology.disk(3)
 
 
