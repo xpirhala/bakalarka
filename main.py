@@ -4,6 +4,7 @@ Spyder Editor
 
 This is a temporary script file.
 """
+import scipy.misc
 
 import cv2
 import obrazy
@@ -14,6 +15,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from skimage import morphology
+from skimage import color
 
 def createFundusMask(inputImage):
         x, y, channels =inputImage.shape
@@ -74,7 +76,9 @@ se22=numpy.delete(se22, 5, 1)
 #Prva vetva
 
 #Morfologicke otvorenie
-i=inputImage[:,:,2] #vyberieme greenpicture
+
+i=inputImage[:,:,1] #vyberieme greenpicture
+i = color.rgb2gray(i)
 
 Img1=morphology.opening(i,se2)
 plt.imshow(Img1,cmap=plt.cm.gray)
@@ -85,7 +89,7 @@ plt.imshow(Img1,cmap=plt.cm.gray)
 plt.show()
 
 
-Img1=Img1-morphology.white_tophat(Img1,se1 )-morphology.black_tophat(Img1, se1) #subtract
+Img1=Img1-morphology.black_tophat(Img1,se1 )-morphology.white_tophat(Img1, se1) #subtract
 plt.imshow(Img1,cmap=plt.cm.gray)
 plt.show()
 
@@ -93,9 +97,12 @@ Img2=morphology.closing(Img1, se)
 plt.imshow(Img2,cmap=plt.cm.gray)
 plt.show()
 
+
 Img2=Img2-Img1
+fig = plt.figure () 
 plt.imshow(Img2,cmap=plt.cm.gray)
 plt.show()
+fig.savefig ( 'plot.png' )
 
 
 
