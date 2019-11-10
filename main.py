@@ -13,7 +13,7 @@ from PIL import Image
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
-import skimage
+from skimage import morphology
 
 def createFundusMask(inputImage):
         x, y, channels =inputImage.shape
@@ -45,10 +45,14 @@ img=createFundusMask(inputImage)
 
 
 #elementarne prvky
-se=skimage.morphology.octagon(9, 8)
-se1=skimage.morphology.disk(5)
-se2=skimage.morphology.disk(3)
-se11=skimage.morphology.disk(6)
-se22=skimage.morphology.disk(3)
+se=morphology.octagon(9,8)
+se1=morphology.disk(5)
+se2=morphology.disk(3)
+se11=morphology.disk(6)
+se22=morphology.disk(3)
 
+i=inputImage[:,:,2]
+#Prva vetva
 
+#Morfologicke otvorenie
+Img1=morphology.binary_opening(i,se)
