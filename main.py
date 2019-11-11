@@ -111,13 +111,24 @@ th, bw = cv2.threshold(Img2, level, 255, cv2.THRESH_BINARY);
 
 
 
-bw=morphology.remove_small_objects(bw, 1500, 8) ## nefunguje opravit obrazok na black and white rucne
+#bw=morphology.remove_small_objects(bw, 1500, 8) ## nefunguje opravit obrazok na black and white rucne
 
 
 plt.imshow(bw,cmap=plt.cm.gray)
 plt.show()
 
 
+#druha vetva
+image2=morphology.opening(i,se22)
+image2=morphology.reconstruction(image2, i)
+image2=image2-morphology.black_tophat(image2,se11 )-morphology.white_tophat(image2, se11)
+image3=morphology.closing(image2, se11)
+
+image3=image3-image2
+
+fig = plt.figure () 
+plt.imshow(image3,cmap=plt.cm.gray)
+plt.show()
 
 
 
