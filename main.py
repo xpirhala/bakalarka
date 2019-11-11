@@ -83,21 +83,16 @@ i=inputImage[:,:,1] #vyberieme greenpicture
 i = color.rgb2gray(i)
 
 Img1=morphology.opening(i,se2)
-plt.imshow(Img1,cmap=plt.cm.gray)
-plt.show()
+
 
 Img1=morphology.reconstruction(Img1, i)
-plt.imshow(Img1,cmap=plt.cm.gray)
-plt.show()
+
 
 
 Img1=Img1-morphology.black_tophat(Img1,se1 )-morphology.white_tophat(Img1, se1) #subtract
-plt.imshow(Img1,cmap=plt.cm.gray)
-plt.show()
+
 
 Img2=morphology.closing(Img1, se)
-plt.imshow(Img2,cmap=plt.cm.gray)
-plt.show()
 
 
 Img2=Img2-Img1
@@ -117,6 +112,10 @@ th, bw = cv2.threshold(Img2, level, 255, cv2.THRESH_BINARY);
 plt.imshow(bw,cmap=plt.cm.gray)
 plt.show()
 
+bw=bw.astype(np.uint8)
+bw=morphology.remove_small_objects(bw, 1500,8)
+plt.imshow(bw,cmap=plt.cm.gray)
+plt.show()
 
 #druha vetva
 image2=morphology.opening(i,se22)
@@ -130,10 +129,15 @@ fig = plt.figure ()
 plt.imshow(image3,cmap=plt.cm.gray)
 plt.show()
 
+level2 = threshold_otsu(image3)
+th2, bw2 = cv2.threshold(image3, level2, 255, cv2.THRESH_BINARY);
+plt.imshow(bw2,cmap=plt.cm.gray)
+plt.show()
 
-
-
-
+bw2=bw2.astype(np.uint8)
+bw2=morphology.remove_small_objects(bw2, 1500)
+plt.imshow(bw2,cmap=plt.cm.gray)
+plt.show()
 
 
 
