@@ -16,6 +16,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from skimage import morphology
 from skimage import color
+from skimage.filters import threshold_otsu
+
 
 def createFundusMask(inputImage):
         x, y, channels =inputImage.shape
@@ -99,11 +101,21 @@ plt.show()
 
 
 Img2=Img2-Img1
+
 fig = plt.figure () 
 plt.imshow(Img2,cmap=plt.cm.gray)
 plt.show()
-fig.savefig ( 'plot.png' )
+#fig.savefig ( 'plot.png' )
+level = threshold_otsu(Img2)
+th, bw = cv2.threshold(Img2, level, 255, cv2.THRESH_BINARY);
 
+
+
+bw=morphology.remove_small_objects(bw, 1500, 8) ## nefunguje opravit obrazok na black and white rucne
+
+
+plt.imshow(bw,cmap=plt.cm.gray)
+plt.show()
 
 
 
